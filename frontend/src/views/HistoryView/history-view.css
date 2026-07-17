@@ -1,0 +1,150 @@
+.history-header {
+  margin-bottom: 20px;
+}
+
+.history-title h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.history-title p {
+  margin-top: 6px;
+  font-size: 15px;
+  color: #64748b;
+}
+.history-stats {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 16px;
+
+  margin: 22px 0 28px;
+}
+
+.history-card {
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  padding: 16px 20px;
+
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+
+  transition: all 0.25s ease;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.history-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  top: 0;
+
+  width: 5px;
+
+  height: 100%;
+}
+
+.history-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 12px 25px rgba(15, 23, 42, 0.12);
+}
+
+.history-card span {
+  display: block;
+
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+.history-card h2 {
+  margin-top: 6px;
+
+  font-size: 26px;
+
+  font-weight: 700;
+}
+.history-title h1 {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.history-title h1 i {
+  color: #3b82f6;
+
+  font-size: 28px;
+}
+.history-card.total {
+  background: #f8fbff;
+}
+
+.history-card.total::before {
+  background: #3b82f6;
+}
+
+.history-card.total h2 {
+  color: #2563eb;
+}
+
+.history-card.total:hover {
+  background: #eef6ff;
+}
+.history-card.created {
+  background: #f4fff8;
+}
+
+.history-card.created::before {
+  background: #22c55e;
+}
+
+.history-card.created h2 {
+  color: #16a34a;
+}
+
+.history-card.created:hover {
+  background: #eafff2;
+}
+.history-card.updated {
+  background: #f5f9ff;
+}
+
+.history-card.updated::before {
+  background: #6366f1;
+}
+
+.history-card.updated h2 {
+  color: #4f46e5;
+}
+
+.history-card.updated:hover {
+  background: #eef2ff;
+}
+.history-card.deleted {
+  background: #fff7f7;
+}
+
+.history-card.deleted::before {
+  background: #ef4444;
+}
+
+.history-card.deleted h2 {
+  color: #dc2626;
+}
+
+.history-card.deleted:hover {
+  background: #ffecec;
+}

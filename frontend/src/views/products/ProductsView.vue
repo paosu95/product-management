@@ -1,152 +1,235 @@
 <template>
+  <ProductStats :stats="stats" />
 
-    <ProductStats />
+  <SearchToolbar
+    @create="openProductModal"
+    @search="handleSearch"
+  />
 
-    <SearchToolbar
-        @create="openProductModal"
-    />
+  <ProductTable
+    :products="paginatedProducts"
+    @edit="editProduct"
+    @delete="deleteProduct"
+    @history="openHistory"
+  />
 
-    <ProductTable
-        :products="products"
-        @edit="editProduct"
-        @delete="deleteProduct"
-    />
+  <div
+    class="pagination"
+    v-if="totalPages > 1"
+  >
+    <button
+      @click="currentPage--"
+      :disabled="currentPage === 1"
+    >
+      Anterior
+    </button>
 
-    <ProductModal
-        v-model="showModal"
-        :product="selectedProduct"
-        :isEditing="isEditing"
-        @save="saveProduct"
-    />
+    <span>
+      Página {{ currentPage }} de {{ totalPages }}
+    </span>
 
-    <DeleteModal
-        v-model="showDeleteModal"
-        :product="selectedProduct"
-        @confirm="confirmDelete"
-    />
+    <button
+      @click="currentPage++"
+      :disabled="currentPage === totalPages"
+    >
+      Siguiente
+    </button>
+  </div>
 
+  <ProductModal
+    v-model="showModal"
+    :product="selectedProduct"
+    :isEditing="isEditing"
+    @save="saveProduct"
+  />
+
+  <DeleteModal
+    v-model="showDeleteModal"
+    :product="selectedProduct"
+    @confirm="confirmDelete"
+  />
+
+  <HistoryModal
+    v-model="showHistoryModal"
+    :product="selectedProduct"
+    :history="selectedHistory"
+  />
 </template>
 
 <script setup>
+import { ref, computed, onMounted } from "vue";
+import Swal from "sweetalert2";
 
-import { ref } from 'vue'
+import { useProductStore } from "@/stores/product.store";
+import { useHistoryStore } from "@/stores/history.store";
 
-import ProductStats from '@/components/products/product-stats/ProductStats.vue'
-import SearchToolbar from '@/components/products/search-toolbar/SearchToolbar.vue'
-import ProductTable from '@/components/products/product-table/ProductTable.vue'
-import ProductModal from '@/components/products/product-modal/ProductModal.vue'
-import DeleteModal from '@/components/products/delete-modal/DeleteModal.vue'
+import ProductStats from "@/components/products/product-stats/ProductStats.vue";
+import SearchToolbar from "@/components/products/search-toolbar/SearchToolbar.vue";
+import ProductTable from "@/components/products/product-table/ProductTable.vue";
+import ProductModal from "@/components/products/product-modal/ProductModal.vue";
+import DeleteModal from "@/components/products/delete-modal/DeleteModal.vue";
+import HistoryModal from "@/components/history/history-modal/HistoryModal.vue";
 
-const showModal = ref(false)
-const showDeleteModal = ref(false)
+const productStore = useProductStore();
+const historyStore = useHistoryStore();
 
-const isEditing = ref(false)
+const showModal = ref(false);
+const showDeleteModal = ref(false);
+const showHistoryModal = ref(false);
 
-const selectedProduct = ref(null)
+const isEditing = ref(false);
+const selectedProduct = ref(null);
 
-const products = ref([
-    {
-        id: 1,
-        name: 'Laptop',
-        category: 'Tecnología',
-        price: 1200,
-        stock: 10,
-        active: true
-    },
-    {
-        id: 2,
-        name: 'Mouse',
-        category: 'Accesorios',
-        price: 30,
-        stock: 50,
-        active: true
-    },
-    {
-        id: 3,
-        name: 'Monitor',
-        category: 'Tecnología',
-        price: 350,
-        stock: 8,
-        active: false
-    }
-])
+const search = ref("");
+
+const currentPage = ref(1);
+const itemsPerPage = 5;
+
+onMounted(async () => {
+  await Promise.all([
+    productStore.fetchProducts(),
+    historyStore.fetchHistory(),
+  ]);
+});
+
+const filteredProducts = computed(() => {
+  if (!search.value.trim()) {
+    return productStore.products;
+  }
+
+  return productStore.products.filter((product) =>
+    product.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+});
+
+const totalPages = computed(() =>
+  Math.ceil(filteredProducts.value.length / itemsPerPage)
+);
+
+const paginatedProducts = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+
+  return filteredProducts.value.slice(
+    start,
+    start + itemsPerPage
+  );
+});
+
+const stats = computed(() => {
+  const total = productStore.products.length;
+
+  const active = productStore.products.filter(
+    (product) => product.status
+  ).length;
+
+  const inactive = total - active;
+
+  const totalStock = productStore.products.reduce(
+    (sum, product) => sum + Number(product.stock),
+    0
+  );
+
+  return {
+    total,
+    active,
+    inactive,
+    totalStock,
+  };
+});
+
+const selectedHistory = computed(() => {
+  if (!selectedProduct.value) return [];
+
+  return historyStore.history.filter(
+    (item) => item.product_name === selectedProduct.value.name
+  );
+});
 
 function openProductModal() {
-
-    selectedProduct.value = null
-
-    isEditing.value = false
-
-    showModal.value = true
-
+  selectedProduct.value = null;
+  isEditing.value = false;
+  showModal.value = true;
 }
 
-function saveProduct(product) {
-
+async function saveProduct(product) {
+  try {
     if (isEditing.value) {
-
-        const index = products.value.findIndex(
-
-            p => p.id === product.id
-
-        )
-
-        if (index !== -1) {
-
-            products.value[index] = {
-                ...product
-            }
-
-        }
-
+      await productStore.updateProduct(product.id, product);
     } else {
-
-        products.value.push(product)
-
+      await productStore.createProduct(product);
     }
 
-    showModal.value = false
+    await historyStore.fetchHistory();
 
-    selectedProduct.value = null
+    Swal.fire({
+      icon: "success",
+      title: isEditing.value
+        ? "Producto actualizado"
+        : "Producto creado",
+      text: isEditing.value
+        ? "El producto fue actualizado correctamente."
+        : "El producto fue creado correctamente.",
+      timer: 1800,
+      showConfirmButton: false,
+    });
 
-    isEditing.value = false
-
+    showModal.value = false;
+    selectedProduct.value = null;
+    isEditing.value = false;
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Ocurrió un error al guardar el producto.",
+    });
+  }
 }
 
 function editProduct(product) {
-
-    selectedProduct.value = {
-        ...product
-    }
-
-    isEditing.value = true
-
-    showModal.value = true
-
+  selectedProduct.value = { ...product };
+  isEditing.value = true;
+  showModal.value = true;
 }
 
 function deleteProduct(product) {
-
-    selectedProduct.value = product
-
-    showDeleteModal.value = true
-
+  selectedProduct.value = product;
+  showDeleteModal.value = true;
 }
 
-function confirmDelete(product) {
+async function confirmDelete(product) {
+  try {
+    await productStore.deleteProduct(product.id);
 
-    products.value = products.value.filter(
+    await historyStore.fetchHistory();
 
-        p => p.id !== product.id
+    Swal.fire({
+      icon: "success",
+      title: "Producto eliminado",
+      text: "El producto fue eliminado correctamente.",
+      timer: 1800,
+      showConfirmButton: false,
+    });
 
-    )
-
-    selectedProduct.value = null
-
-    showDeleteModal.value = false
-
+    showDeleteModal.value = false;
+    selectedProduct.value = null;
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "No fue posible eliminar el producto.",
+    });
+  }
 }
 
+function openHistory(product) {
+  selectedProduct.value = product;
+  showHistoryModal.value = true;
+}
+
+function handleSearch(value) {
+  search.value = value;
+  currentPage.value = 1;
+}
 </script>
 
 <style scoped src="./products-view.css"></style>

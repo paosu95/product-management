@@ -1,86 +1,57 @@
 <template>
+  <BaseModal
+    :modelValue="modelValue"
+    @update:modelValue="closeModal"
+  >
+    <template #header>
+      <h2>
+        {{ isEditing ? "Editar Producto" : "Nuevo Producto" }}
+      </h2>
+    </template>
 
-    <BaseModal
-        :modelValue="modelValue"
-        @update:modelValue="closeModal"
-    >
-
-        <template #header>
-
-            <h2>
-
-                {{ isEditing ? 'Editar Producto' : 'Nuevo Producto' }}
-
-            </h2>
-
-        </template>
-
-        <ProductForm
-            :product="product"
-            :isEditing="isEditing"
-            @save="saveProduct"
-            @cancel="closeModal"
-        />
-
-    </BaseModal>
-
+    <ProductForm
+      :product="product"
+      :isEditing="isEditing"
+      @save="saveProduct"
+      @cancel="closeModal"
+    />
+  </BaseModal>
 </template>
 
 <script setup>
+import BaseModal from "@/components/common/base-modal/BaseModal.vue";
+import ProductForm from "../product-form/ProductForm.vue";
 
-import BaseModal from '@/components/common/base-modal/BaseModal.vue'
-import ProductForm from '../product-form/ProductForm.vue'
+defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
 
-const props = defineProps({
+  product: {
+    type: Object,
+    default: null,
+  },
 
-    modelValue:{
-
-        type:Boolean,
-
-        default:false
-
-    },
-
-    product:{
-
-        type:Object,
-
-        default:null
-
-    },
-
-    isEditing:{
-
-        type:Boolean,
-
-        default:false
-
-    }
-
-})
+  isEditing: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 const emit = defineEmits([
+  "update:modelValue",
+  "save",
+]);
 
-    'update:modelValue',
-
-    'save'
-
-])
-
-function closeModal(){
-
-    emit('update:modelValue', false)
-
+function closeModal() {
+  emit("update:modelValue", false);
 }
 
-function saveProduct(product){
-
-    emit('save', product)
-
-    closeModal()
-
+function saveProduct(product) {
+  emit("save", product);
+  closeModal();
 }
-
 </script>
 
 <style scoped src="./product-modal.css"></style>

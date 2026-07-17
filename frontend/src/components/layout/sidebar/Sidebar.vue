@@ -1,37 +1,52 @@
 <template>
-
-<div class="sidebar-container">
+  <div class="sidebar-container">
 
     <div class="logo">
 
+      <div class="logo-icon">
         <i class="bi bi-box-seam"></i>
+      </div>
 
-        <span>Product Manager</span>
+      <div>
+        <h2>Nova Inventory</h2>
+        <span>Management System</span>
+      </div>
 
     </div>
 
     <nav>
 
-        <RouterLink to="/products">
+      <RouterLink to="/products">
+        <i class="bi bi-box-seam"></i>
+        <span>Productos</span>
+      </RouterLink>
 
-            <i class="bi bi-box"></i>
-
-            Productos
-
-        </RouterLink>
-
-        <RouterLink to="/history">
-
-            <i class="bi bi-clock-history"></i>
-
-            Historial
-
-        </RouterLink>
+      <RouterLink to="/history">
+        <i class="bi bi-clock-history"></i>
+        <span>Historial</span>
+      </RouterLink>
 
     </nav>
 
-</div>
+    <div class="sidebar-footer">
 
+      <div class="avatar">
+
+        <i class="bi bi-person-circle"></i>
+
+      </div>
+
+      <div>
+
+        <strong>Administrador</strong>
+
+        <p>Online</p>
+
+      </div>
+
+    </div>
+
+  </div>
 </template>
 
 <script setup>

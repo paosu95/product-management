@@ -55,3 +55,12 @@ tbody tr:hover{
     background:#f8fafc;
 
 }
+.sortable{
+    cursor:pointer;
+    user-select:none;
+    transition:.2s;
+}
+
+.sortable:hover{
+    color:#2563eb;
+}

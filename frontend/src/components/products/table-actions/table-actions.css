@@ -1,29 +1,32 @@
-.table-actions{
+.table-actions {
+  display: flex;
 
-    display:flex;
-
-    gap:12px;
-
+  gap: 10px;
 }
 
-.table-actions button{
+.table-actions button {
+  width: 34px;
 
-    border:none;
+  height: 34px;
 
-    background:none;
+  border: none;
 
-    cursor:pointer;
+  border-radius: 8px;
 
-    font-size:18px;
+  background: transparent;
 
-    color:#64748b;
+  cursor: pointer;
 
-    transition:.2s;
-
+  transition: 0.2s;
 }
 
-.table-actions button:hover{
-
-    color:#2563eb;
-
+.table-actions button:hover {
+  background: #eef2ff;
 }
+
+.table-actions button i {
+  font-size: 20px;
+
+  color: #475569;
+}
+

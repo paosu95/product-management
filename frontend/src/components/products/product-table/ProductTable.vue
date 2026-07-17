@@ -1,102 +1,132 @@
 <template>
+  <div class="product-table">
+    <table>
+      <thead>
+        <tr>
+          <th @click="sortBy('name')" class="sortable">
+            Nombre {{ getArrow("name") }}
+          </th>
 
-    <div class="product-table">
+          <th @click="sortBy('description')" class="sortable">
+            Descripción {{ getArrow("description") }}
+          </th>
 
-        <table>
+          <th @click="sortBy('price')" class="sortable">
+            Precio {{ getArrow("price") }}
+          </th>
 
-            <thead>
+          <th @click="sortBy('stock')" class="sortable">
+            Stock {{ getArrow("stock") }}
+          </th>
 
-                <tr>
+          <th @click="sortBy('status')" class="sortable">
+            Estado {{ getArrow("status") }}
+          </th>
 
-                    <th>Nombre</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-                    <th>Categoría</th>
+      <tbody>
+        <tr
+          v-for="product in sortedProducts"
+          :key="product.id"
+        >
+          <td>{{ product.name }}</td>
 
-                    <th>Precio</th>
+          <td>{{ product.description }}</td>
 
-                    <th>Stock</th>
+          <td>${{ product.price }}</td>
 
-                    <th>Estado</th>
+          <td>{{ product.stock }}</td>
 
-                    <th>Acciones</th>
+          <td>
+            <StatusBadge :status="product.status" />
+          </td>
 
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                <tr
-                    v-for="product in products"
-                    :key="product.id"
-                >
-
-                    <td>{{ product.name }}</td>
-
-                    <td>{{ product.category }}</td>
-
-                    <td>${{ product.price }}</td>
-
-                    <td>{{ product.stock }}</td>
-
-                    <td>
-
-                        <StatusBadge
-                            :active="product.active"
-                        />
-
-                    </td>
-
-                    <td>
-
-                        <TableActions
-                            @edit="editProduct(product)"
-                            @delete="deleteProduct(product)"
-                        />
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
+          <td>
+            <TableActions
+              @edit="editProduct(product)"
+              @delete="deleteProduct(product)"
+              @history="historyProduct(product)"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script setup>
+import { ref, computed } from "vue";
 
-import StatusBadge from '../status-badge/StatusBadge.vue'
-import TableActions from '../table-actions/TableActions.vue'
+import StatusBadge from "../status-badge/StatusBadge.vue";
+import TableActions from "../table-actions/TableActions.vue";
 
 const props = defineProps({
-
-    products:{
-        type:Array,
-        default:() => []
-    }
-
-})
+  products: {
+    type: Array,
+    default: () => [],
+  },
+});
 
 const emit = defineEmits([
-    'edit',
-    'delete'
-])
+  "edit",
+  "delete",
+  "history",
+]);
 
-function editProduct(product){
+const currentSort = ref("name");
+const currentDirection = ref("asc");
 
-    emit('edit',product)
+const sortedProducts = computed(() => {
+  const products = [...props.products];
 
+  return products.sort((a, b) => {
+    let valueA = a[currentSort.value];
+    let valueB = b[currentSort.value];
+
+    if (typeof valueA === "string") {
+      valueA = valueA.toLowerCase();
+      valueB = valueB.toLowerCase();
+    }
+
+    if (valueA < valueB) return currentDirection.value === "asc" ? -1 : 1;
+    if (valueA > valueB) return currentDirection.value === "asc" ? 1 : -1;
+
+    return 0;
+  });
+});
+
+function sortBy(column) {
+  if (currentSort.value === column) {
+    currentDirection.value =
+      currentDirection.value === "asc" ? "desc" : "asc";
+  } else {
+    currentSort.value = column;
+    currentDirection.value = "asc";
+  }
 }
 
-function deleteProduct(product){
+function getArrow(column) {
+  if (currentSort.value !== column) {
+    return "⇅";
+  }
 
-    emit('delete',product)
-
+  return currentDirection.value === "asc" ? "▲" : "▼";
 }
 
+function editProduct(product) {
+  emit("edit", product);
+}
+
+function deleteProduct(product) {
+  emit("delete", product);
+}
+
+function historyProduct(product) {
+  emit("history", product);
+}
 </script>
 
 <style scoped src="./product-table.css"></style>

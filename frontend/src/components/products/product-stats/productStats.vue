@@ -1,11 +1,13 @@
 <template>
+
     <div class="stats-grid">
 
         <BaseCard
-            v-for="stat in stats"
+            v-for="stat in cards"
             :key="stat.title"
             class="stat-card"
         >
+
             <div class="icon-container">
 
                 <i
@@ -26,33 +28,71 @@
         </BaseCard>
 
     </div>
+
 </template>
 
 <script setup>
+
+import { computed } from 'vue'
+
 import BaseCard from '@/components/common/base-card/BaseCard.vue'
 
-const stats = [
-    {
-        title: 'Productos',
-        value: 154,
-        icon: 'bi-box-seam'
-    },
-    {
-        title: 'Activos',
-        value: 120,
-        icon: 'bi-check-circle-fill'
-    },
-    {
-        title: 'Inactivos',
-        value: 34,
-        icon: 'bi-x-circle-fill'
-    },
-    {
-        title: 'Inventario',
-        value: '$58.420',
-        icon: 'bi-currency-dollar'
+const props = defineProps({
+
+    stats:{
+
+        type:Object,
+
+        required:true
+
     }
-]
+
+})
+
+const cards = computed(() => [
+
+    {
+
+        title:'Productos',
+
+        value:props.stats.total,
+
+        icon:'bi-box-seam'
+
+    },
+
+    {
+
+        title:'Activos',
+
+        value:props.stats.active,
+
+        icon:'bi-check-circle-fill'
+
+    },
+
+    {
+
+        title:'Inactivos',
+
+        value:props.stats.inactive,
+
+        icon:'bi-x-circle-fill'
+
+    },
+
+    {
+
+        title:'Stock Total',
+
+        value:props.stats.totalStock,
+
+        icon:'bi-boxes'
+
+    }
+
+])
+
 </script>
 
 <style scoped src="./product-stats.css"></style>
