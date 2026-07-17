@@ -3,12 +3,13 @@
 
   <SearchToolbar @create="openProductModal" @search="handleSearch" />
 
-  <ProductTable
-    :products="paginatedProducts"
-    @edit="editProduct"
-    @delete="deleteProduct"
-    @history="openHistory"
-  />
+ <ProductTable
+  :products="paginatedProducts"
+  @edit="openEditModal"
+  @delete="confirmDelete"
+  @history="openHistory"
+  @toggle-status="toggleStatus"
+/>
 
   <div class="pagination" v-if="totalPages > 1">
     <button @click="currentPage--" :disabled="currentPage === 1">
@@ -231,6 +232,18 @@ function handleSearch(value) {
 function filterByStatus(filter) {
   statusFilter.value = filter;
   currentPage.value = 1;
+}
+async function toggleStatus(product) {
+  try {
+    await productStore.changeStatus(
+      product.id,
+      !product.status
+    );
+
+    await historyStore.fetchHistory();
+  } catch (error) {
+    console.error(error);
+  }
 }
 </script>
 

@@ -28,10 +28,7 @@
       </thead>
 
       <tbody>
-        <tr
-          v-for="product in sortedProducts"
-          :key="product.id"
-        >
+        <tr v-for="product in sortedProducts" :key="product.id">
           <td>{{ product.name }}</td>
 
           <td>{{ product.description }}</td>
@@ -41,7 +38,10 @@
           <td>{{ product.stock }}</td>
 
           <td>
-            <StatusBadge :status="product.status" />
+            <StatusBadge
+              :status="product.status"
+              @toggle="toggleStatus(product)"
+            />
           </td>
 
           <td>
@@ -74,6 +74,7 @@ const emit = defineEmits([
   "edit",
   "delete",
   "history",
+  "toggle-status",
 ]);
 
 const currentSort = ref("name");
@@ -100,8 +101,7 @@ const sortedProducts = computed(() => {
 
 function sortBy(column) {
   if (currentSort.value === column) {
-    currentDirection.value =
-      currentDirection.value === "asc" ? "desc" : "asc";
+    currentDirection.value = currentDirection.value === "asc" ? "desc" : "asc";
   } else {
     currentSort.value = column;
     currentDirection.value = "asc";
@@ -126,6 +126,9 @@ function deleteProduct(product) {
 
 function historyProduct(product) {
   emit("history", product);
+}
+function toggleStatus(product) {
+  emit("toggle-status", product);
 }
 </script>
 

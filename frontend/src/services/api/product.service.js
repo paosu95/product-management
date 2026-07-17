@@ -19,3 +19,8 @@ export const updateStatus = (id, status) =>
   api.patch(`/products/${id}/status`, {
     status,
   });
+  export const changeProductStatus = (id, status) => {
+  return api.patch(`/products/${id}/status`, {
+    status,
+  });
+};

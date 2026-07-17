@@ -1,7 +1,8 @@
 <template>
   <span
-    class="status-badge"
+    class="badge"
     :class="status ? 'active' : 'inactive'"
+    @click="$emit('toggle')"
   >
     {{ status ? "Activo" : "Inactivo" }}
   </span>
@@ -9,11 +10,10 @@
 
 <script setup>
 defineProps({
-  status: {
-    type: Boolean,
-    default: false,
-  },
-});
+  status: Boolean
+})
+
+defineEmits(["toggle"])
 </script>
 
 <style scoped src="./status-badge.css"></style>

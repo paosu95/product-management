@@ -1,27 +1,23 @@
-.status-badge{
+.status-badge {
+  padding: 6px 14px;
 
-    padding:6px 14px;
+  border-radius: 999px;
 
-    border-radius:999px;
+  font-size: 13px;
 
-    font-size:13px;
-
-    font-weight:600;
-
+  font-weight: 600;
 }
 
-.active{
+.active {
+  background: #dcfce7;
 
-    background:#dcfce7;
-
-    color:#15803d;
-
+  color: #15803d;
+  cursor: pointer;
 }
 
-.inactive{
+.inactive {
+  background: #fee2e2;
 
-    background:#fee2e2;
-
-    color:#dc2626;
-
+  color: #dc2626;
+  cursor: pointer;
 }
