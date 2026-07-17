@@ -1,0 +1,41 @@
+.base-input-container{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.base-input-label{
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#334155;
+
+}
+
+.base-input{
+
+    width:100%;
+
+    padding:10px 14px;
+
+    border:1px solid #cbd5e1;
+
+    border-radius:8px;
+
+    outline:none;
+
+    transition:.2s;
+
+}
+
+.base-input:focus{
+
+    border-color:#2563eb;
+
+}

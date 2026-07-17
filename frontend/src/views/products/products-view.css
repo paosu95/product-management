@@ -18,12 +18,20 @@
 
 }
 
-.stats{
+.page-header h1{
 
-    display:grid;
+    margin:0;
 
-    grid-template-columns:repeat(4,1fr);
+    font-size:34px;
 
-    gap:20px;
+    font-weight:700;
+
+}
+
+.page-header p{
+
+    margin-top:6px;
+
+    color:#64748b;
 
 }

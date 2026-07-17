@@ -1,0 +1,39 @@
+.search-toolbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin:24px 0;
+
+}
+
+.search-toolbar__search{
+
+    flex:1;
+
+}
+
+.search-toolbar__actions{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+@media(max-width:768px){
+
+    .search-toolbar{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+}   

@@ -1,28 +1,34 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import DashboardView from '../views/DashboardView.vue'
-import ProductsView from '../views/ProductsView.vue'
+import MainLayout from '@/layouts/main-layout/MainLayout.vue'
+
+import ProductsView from '@/views/products/ProductsView.vue'
+import HistoryView from '@/views/HistoryView/HistoryView.vue'
 
 const routes = [
-
-    {
-        path:'/',
-        name:'dashboard',
-        component:DashboardView
-    },
-
-    {
-        path:'/products',
-        name:'products',
-        component:ProductsView
-    }
-
+  {
+    path: '/',
+    component: MainLayout,
+    children: [
+      {
+        path: '',
+        redirect: '/products'
+      },
+      {
+        path: 'products',
+        name: 'products',
+        component: ProductsView
+      },
+      {
+        path: 'history',
+        name: 'history',
+        component: HistoryView
+      }
+    ]
+  }
 ]
 
 export default createRouter({
-
-    history:createWebHistory(),
-
-    routes
-
+  history: createWebHistory(),
+  routes
 })

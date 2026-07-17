@@ -8,10 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
-import './assets/css/base/variables.css'
-import './assets/css/base/global.css'
-import './assets/css/base/typography.css'
-import './assets/css/base/animations.css'
+import './assets/css/global.css'
+import './assets/css/variables.css'
 
 const app = createApp(App)
 

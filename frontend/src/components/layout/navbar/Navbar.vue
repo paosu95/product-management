@@ -1,42 +1,22 @@
 <template>
-  <header class="navbar">
 
-    <div class="navbar-left">
-      <h2>¡Bienvenida! 👋</h2>
-      <p>Gestiona tu inventario de manera eficiente.</p>
-    </div>
+<header class="navbar">
 
-    <div class="navbar-right">
+    <h2>Product Management</h2>
 
-      <div class="search-box">
-        <i class="bi bi-search"></i>
-        <input
-          type="text"
-          placeholder="Buscar..."
-        />
-      </div>
+    <div class="user">
 
-      <button class="icon-btn">
-        <i class="bi bi-bell"></i>
-      </button>
+        <i class="bi bi-person-circle"></i>
 
-      <div class="profile">
-
-        <img
-          src="https://i.pravatar.cc/100?img=32"
-          alt="Avatar"
-        />
-
-        <div>
-          <h4>Administrador</h4>
-          <span>Nova Inventory</span>
-        </div>
-
-      </div>
+        Admin
 
     </div>
 
-  </header>
+</header>
+
 </template>
 
-<style scoped src="./navbar.css"></style>
+<script setup>
+</script>
+
+<style src="./navbar.css"></style>

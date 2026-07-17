@@ -1,65 +1,40 @@
 <template>
-  <aside class="sidebar">
+
+<div class="sidebar-container">
 
     <div class="logo">
 
-      <div class="logo-icon">
-        <i class="bi bi-box-seam-fill"></i>
-      </div>
+        <i class="bi bi-box-seam"></i>
 
-      <div>
-        <h3>Nova</h3>
-        <span>Inventory</span>
-      </div>
+        <span>Product Manager</span>
 
     </div>
 
-    <nav class="menu">
+    <nav>
 
-      <RouterLink to="/" class="menu-item">
+        <RouterLink to="/products">
 
-        <i class="bi bi-grid-fill"></i>
+            <i class="bi bi-box"></i>
 
-        Dashboard
+            Productos
 
-      </RouterLink>
+        </RouterLink>
 
-      <RouterLink to="/products" class="menu-item">
+        <RouterLink to="/history">
 
-        <i class="bi bi-box-fill"></i>
+            <i class="bi bi-clock-history"></i>
 
-        Productos
+            Historial
 
-      </RouterLink>
-
-      <RouterLink to="/history" class="menu-item">
-
-        <i class="bi bi-clock-history"></i>
-
-        Historial
-
-      </RouterLink>
+        </RouterLink>
 
     </nav>
 
-    <div class="sidebar-footer">
+</div>
 
-      <img
-        src="https://i.pravatar.cc/100"
-        class="avatar"
-      >
-
-      <div>
-
-        <h5>Administrador</h5>
-
-        <span>Nova Inventory</span>
-
-      </div>
-
-    </div>
-
-  </aside>
 </template>
 
-<style scoped src="./sidebar.css"></style>
+<script setup>
+</script>
+
+<style src="./sidebar.css"></style>

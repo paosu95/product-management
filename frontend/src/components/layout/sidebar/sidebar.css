@@ -1,148 +1,59 @@
-.sidebar{
+.sidebar-container{
 
-    width:270px;
-    height:100vh;
-
-    background:var(--sidebar);
-
-    position:fixed;
-
-    left:0;
-    top:0;
-
-    display:flex;
-    flex-direction:column;
-
-    justify-content:space-between;
-
-    padding:30px;
-
+    background:#1e293b;
     color:white;
 
+    height:100vh;
+
+    padding:25px;
+
+    display:flex;
+
+    flex-direction:column;
 }
 
 .logo{
 
-    display:flex;
+    font-size:22px;
 
-    align-items:center;
+    font-weight:700;
 
-    gap:15px;
-
+    margin-bottom:40px;
 }
 
-.logo-icon{
+.logo i{
 
-    width:55px;
-
-    height:55px;
-
-    border-radius:16px;
-
-    background:var(--primary);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:24px;
-
+    margin-right:10px;
 }
 
-.logo h3{
-
-    color:white;
-
-    margin:0;
-
-}
-
-.logo span{
-
-    color:#94A3B8;
-
-    font-size:.9rem;
-
-}
-
-.menu{
+nav{
 
     display:flex;
 
     flex-direction:column;
 
-    gap:12px;
-
-}
-
-.menu-item{
-
-    display:flex;
-
-    align-items:center;
-
     gap:15px;
-
-    padding:15px 18px;
-
-    border-radius:14px;
-
-    color:#CBD5E1;
-
-    font-weight:500;
-
 }
 
-.menu-item:hover{
-
-    background:#1E293B;
+nav a{
 
     color:white;
 
+    text-decoration:none;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    transition:.3s;
+}
+
+nav a:hover{
+
+    background:#334155;
 }
 
 .router-link-active{
 
-    background:var(--primary);
-
-    color:white;
-
-}
-
-.sidebar-footer{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-}
-
-.avatar{
-
-    width:48px;
-
-    height:48px;
-
-    border-radius:50%;
-
-}
-
-.sidebar-footer h5{
-
-    color:white;
-
-    margin:0;
-
-}
-
-.sidebar-footer span{
-
-    color:#94A3B8;
-
-    font-size:.85rem;
-
+    background:#3b82f6;
 }

@@ -1,11 +1,15 @@
 <template>
 
-<div class="base-card">
+    <div class="base-card">
 
-    <slot/>
+        <slot />
 
-</div>
+    </div>
 
 </template>
+
+<script setup>
+
+</script>
 
 <style scoped src="./base-card.css"></style>

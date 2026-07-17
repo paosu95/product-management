@@ -1,0 +1,47 @@
+.product-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.form-group label{
+
+    font-weight:600;
+
+}
+
+.form-group select{
+
+    padding:10px;
+
+    border-radius:8px;
+
+    border:1px solid #d1d5db;
+
+}
+
+.buttons{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+    margin-top:10px;
+
+}

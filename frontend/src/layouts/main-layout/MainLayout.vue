@@ -1,14 +1,16 @@
 <template>
-  <div class="layout">
+  <div class="app-layout">
 
-    <Sidebar />
+    <aside class="sidebar">
+      <Sidebar />
+    </aside>
 
     <div class="main-content">
 
       <Navbar />
 
-      <main class="page-content">
-        <router-view />
+      <main class="content">
+        <RouterView />
       </main>
 
     </div>
@@ -17,8 +19,10 @@
 </template>
 
 <script setup>
-import Sidebar from '../../components/layout/sidebar/Sidebar.vue'
-import Navbar from '../../components/layout/navbar/Navbar.vue'
+import { RouterView } from 'vue-router'
+
+import Sidebar from '@/components/layout/sidebar/Sidebar.vue'
+import Navbar from '@/components/layout/navbar/Navbar.vue'
 </script>
 
-<style scoped src="./main-layout.css"></style>
+<style src="./main-layout.css"></style>

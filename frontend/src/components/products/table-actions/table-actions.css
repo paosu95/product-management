@@ -1,0 +1,29 @@
+.table-actions{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.table-actions button{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    color:#64748b;
+
+    transition:.2s;
+
+}
+
+.table-actions button:hover{
+
+    color:#2563eb;
+
+}
