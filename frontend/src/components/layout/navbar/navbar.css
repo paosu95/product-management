@@ -1,0 +1,147 @@
+.navbar{
+
+    height:90px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 40px;
+
+    border-bottom:1px solid var(--border);
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.navbar-left h2{
+
+    margin:0;
+
+    font-size:1.8rem;
+
+    color:var(--text);
+
+}
+
+.navbar-left p{
+
+    margin-top:6px;
+
+    color:var(--text-light);
+
+}
+
+.navbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.search-box{
+
+    width:300px;
+
+    height:46px;
+
+    background:#F1F5F9;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:0 18px;
+
+    gap:10px;
+
+}
+
+.search-box input{
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    width:100%;
+
+    font-size:.95rem;
+
+}
+
+.icon-btn{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#F1F5F9;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:1.2rem;
+
+}
+
+.icon-btn:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.profile img{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+}
+
+.profile h4{
+
+    margin:0;
+
+    font-size:1rem;
+
+}
+
+.profile span{
+
+    color:var(--text-light);
+
+    font-size:.85rem;
+
+}
