@@ -1,10 +1,7 @@
 <template>
-  <ProductStats :stats="stats" />
+  <ProductStats :stats="stats" @filter="filterByStatus" />
 
-  <SearchToolbar
-    @create="openProductModal"
-    @search="handleSearch"
-  />
+  <SearchToolbar @create="openProductModal" @search="handleSearch" />
 
   <ProductTable
     :products="paginatedProducts"
@@ -13,26 +10,15 @@
     @history="openHistory"
   />
 
-  <div
-    class="pagination"
-    v-if="totalPages > 1"
-  >
-    <button
-      @click="currentPage--"
-      :disabled="currentPage === 1"
-    >
-      Anterior
+  <div class="pagination" v-if="totalPages > 1">
+    <button @click="currentPage--" :disabled="currentPage === 1">
+      ← Anterior
     </button>
 
-    <span>
-      Página {{ currentPage }} de {{ totalPages }}
-    </span>
+    <span> Página {{ currentPage }} de {{ totalPages }} </span>
 
-    <button
-      @click="currentPage++"
-      :disabled="currentPage === totalPages"
-    >
-      Siguiente
+    <button @click="currentPage++" :disabled="currentPage === totalPages">
+      Siguiente →
     </button>
   </div>
 
@@ -81,6 +67,7 @@ const isEditing = ref(false);
 const selectedProduct = ref(null);
 
 const search = ref("");
+const statusFilter = ref("all");
 
 const currentPage = ref(1);
 const itemsPerPage = 5;
@@ -93,40 +80,52 @@ onMounted(async () => {
 });
 
 const filteredProducts = computed(() => {
-  if (!search.value.trim()) {
-    return productStore.products;
+  let products = productStore.products;
+
+  if (search.value.trim()) {
+    products = products.filter((product) =>
+      product.name.toLowerCase().includes(search.value.toLowerCase())
+    );
   }
 
-  return productStore.products.filter((product) =>
-    product.name.toLowerCase().includes(search.value.toLowerCase())
-  );
+  switch (statusFilter.value) {
+    case "active":
+      products = products.filter((product) => product.status);
+      break;
+
+    case "inactive":
+      products = products.filter((product) => !product.status);
+      break;
+
+    default:
+      break;
+  }
+
+  return products;
 });
 
 const totalPages = computed(() =>
-  Math.ceil(filteredProducts.value.length / itemsPerPage)
+  Math.ceil(filteredProducts.value.length / itemsPerPage),
 );
 
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
 
-  return filteredProducts.value.slice(
-    start,
-    start + itemsPerPage
-  );
+  return filteredProducts.value.slice(start, start + itemsPerPage);
 });
 
 const stats = computed(() => {
   const total = productStore.products.length;
 
   const active = productStore.products.filter(
-    (product) => product.status
+    (product) => product.status,
   ).length;
 
   const inactive = total - active;
 
   const totalStock = productStore.products.reduce(
     (sum, product) => sum + Number(product.stock),
-    0
+    0,
   );
 
   return {
@@ -141,7 +140,7 @@ const selectedHistory = computed(() => {
   if (!selectedProduct.value) return [];
 
   return historyStore.history.filter(
-    (item) => item.product_name === selectedProduct.value.name
+    (item) => item.product_name === selectedProduct.value.name,
   );
 });
 
@@ -163,9 +162,7 @@ async function saveProduct(product) {
 
     Swal.fire({
       icon: "success",
-      title: isEditing.value
-        ? "Producto actualizado"
-        : "Producto creado",
+      title: isEditing.value ? "Producto actualizado" : "Producto creado",
       text: isEditing.value
         ? "El producto fue actualizado correctamente."
         : "El producto fue creado correctamente.",
@@ -228,6 +225,11 @@ function openHistory(product) {
 
 function handleSearch(value) {
   search.value = value;
+  currentPage.value = 1;
+}
+
+function filterByStatus(filter) {
+  statusFilter.value = filter;
   currentPage.value = 1;
 }
 </script>

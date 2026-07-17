@@ -1,20 +1,17 @@
-# Node
-frontend/node_modules/
-
 # Python
-backend/venv/
+venv/
 __pycache__/
 *.pyc
 
-# Variables de entorno
-backend/.env
+# Node
+node_modules/
+dist/
 
-# VS Code
+# Env
+.env
+
+# VSCode
 .vscode/
 
-# Logs
-*.log
-
-# Sistema
+# macOS
 .DS_Store
-Thumbs.db
