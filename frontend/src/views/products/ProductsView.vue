@@ -5,7 +5,7 @@
 
  <ProductTable
   :products="paginatedProducts"
-  @edit="openEditModal"
+  @edit="editProduct"
   @delete="confirmDelete"
   @history="openHistory"
   @toggle-status="toggleStatus"
